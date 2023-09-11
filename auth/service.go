@@ -11,7 +11,8 @@ type Service interface {
 	ValidateToken(token string) (*jwt.Token, error)
 }
 
-type jwtService struct{}
+type jwtService struct {
+}
 
 var SECRET_KEY = []byte("BWASTARTUP_s3cr3T_k3Y")
 
