@@ -7,12 +7,12 @@ import (
 
 type Campaign struct {
 	ID               int
-	UserId           int
+	UserID           int
 	Name             string
 	ShortDescription string
 	Description      string
 	Perks            string
-	BackerCount      string
+	BackerCount      int
 	GoalAmount       int
 	CurrentAmount    int
 	Slug             string
