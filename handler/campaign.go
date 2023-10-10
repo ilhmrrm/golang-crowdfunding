@@ -88,3 +88,43 @@ func (h *campaignHandler) CreateCampaign(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 
 }
+
+// user memasukkan input
+// handler
+func (h *campaignHandler) UpdateCampaign(c *gin.Context) {
+	// tangkap id dari parameter yang diinginkan
+	var inputID campaign.GetCampaignDetailInput
+
+	err := c.ShouldBindUri(&inputID)
+	if err != nil {
+		response := helper.APIResponse("Failed to update campaign", http.StatusBadRequest, "error update", nil)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	// mapping kedalam struct parameter yang dikirim oleh user melalui form
+
+	var inputData campaign.CreateCampaignInput
+
+	err = c.ShouldBindJSON(&inputData)
+	if err != nil {
+		response := helper.APIResponse("Failed to update campaign", http.StatusBadRequest, "error update 2", nil)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	currentUser := c.MustGet("currentUser").(user.User)
+
+	inputData.User = currentUser
+
+	// call service
+	updatedCampaign, err := h.service.UpdateCampaign(inputID, inputData)
+	if err != nil {
+		response := helper.APIResponse("Failed to update campaign", http.StatusBadRequest, "error update 3", nil)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	response := helper.APIResponse("Success to update campaign", http.StatusOK, "success", campaign.FormatCampaign(updatedCampaign))
+	c.JSON(http.StatusOK, response)
+}
