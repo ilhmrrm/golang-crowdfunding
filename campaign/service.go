@@ -111,21 +111,20 @@ func (s *service) SaveCampaignImage(input CreateCampaignImageInput, fileLocation
 		return CampaignImage{}, errors.New("Not an owner of the campaign")
 	}
 
-	// service (kondisi point 2 di repo, kemudian panggil repo point 1)
 	isPrimary := 0
 	if input.IsPrimary {
-			isPrimary = 1
-			_, err := s.repository.MarkAllImagesAsNonPrimary(input.CampaignID)
-			if err != nil {
-				return CampaignImage{}, err
-			}
+		isPrimary = 1
+
+		_, err := s.repository.MarkAllImagesAsNonPrimary(input.CampaignID)
+		if err != nil {
+			return CampaignImage{}, err
+		}
 	}
 
-	campaignImage := CampaignImage{
-		CampaignId: input.CampaignID,
-		IsPrimary: isPrimary,
-		FileName: fileLocation,
-	}
+	campaignImage := CampaignImage{}
+	campaignImage.CampaignId = input.CampaignID
+	campaignImage.IsPrimary = isPrimary
+	campaignImage.FileName = fileLocation
 
 	newCampaignImage, err := s.repository.CreateImage(campaignImage)
 	if err != nil {
@@ -133,5 +132,4 @@ func (s *service) SaveCampaignImage(input CreateCampaignImageInput, fileLocation
 	}
 
 	return newCampaignImage, nil
-	// campaignImage.CampaignId = input.CampaignID
 }
