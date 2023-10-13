@@ -19,7 +19,7 @@ func NewTransactionHandler(service transaction.Service) *transactionHandler {
 
 func (h *transactionHandler) GetCampaignTransactions(c *gin.Context) {
 	var input transaction.GetCampaignTransactionsInput
-	
+
 	// parameter di uri
 	err := c.ShouldBindUri(&input)
 	if err != nil {

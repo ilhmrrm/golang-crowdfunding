@@ -79,12 +79,12 @@ func (r *repository) CreateImage(campaignImage CampaignImage) (CampaignImage, er
 
 	return campaignImage, nil
 }
- 
-// repository : 
+
+// repository :
 // 1. create image/save adata image ke dalam table campaign_images
 // 2. ubah is_primary true ke false
 
-func (r *repository) MarkAllImagesAsNonPrimary(campaignID int) (bool, error)  {
+func (r *repository) MarkAllImagesAsNonPrimary(campaignID int) (bool, error) {
 	// UPDATE campaign_images SET is_primary = false WHERE campaign_id = 1
 
 	err := r.db.Model(&CampaignImage{}).Where("campaign_id = ?", campaignID).Update("is_primary", false).Error

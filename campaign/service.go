@@ -86,7 +86,7 @@ func (s *service) UpdateCampaign(inputID GetCampaignDetailInput, inputData Creat
 		return campaign, errors.New("Not an owner of the campaign")
 	}
 
-	// catch parameter 
+	// catch parameter
 	campaign.Name = inputData.Name
 	campaign.ShortDescription = inputData.ShortDescription
 	campaign.Description = inputData.Description
