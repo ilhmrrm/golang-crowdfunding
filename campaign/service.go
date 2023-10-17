@@ -122,7 +122,7 @@ func (s *service) SaveCampaignImage(input CreateCampaignImageInput, fileLocation
 	}
 
 	campaignImage := CampaignImage{}
-	campaignImage.CampaignId = input.CampaignID
+	campaignImage.CampaignID = input.CampaignID
 	campaignImage.IsPrimary = isPrimary
 	campaignImage.FileName = fileLocation
 

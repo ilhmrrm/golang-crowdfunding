@@ -53,11 +53,11 @@ func (h *transactionHandler) GetUserTransactions(c *gin.Context) {
 
 	transactions, err := h.service.GetTransactionsByUserID(userID)
 	if err != nil {
-		response := helper.APIResponse("Failed to get user's transactions", http.StatusBadRequest, "error 2", nil)
+		response := helper.APIResponse("Failed to get user's transactions", http.StatusBadRequest, "error handler", nil)
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
 
-	response := helper.APIResponse("Campaign's transactions", http.StatusOK, "success", transactions)
+	response := helper.APIResponse("Campaign's transactions", http.StatusOK, "success", transaction.FormatUserTransactions(transactions))
 	c.JSON(http.StatusOK, response)
 }

@@ -30,7 +30,7 @@ func (r *repository) GetByUserID(userID int) ([]Transaction, error) {
 
 	// load campaign images with campaign.campaignimages (check on entity transaction)
 	// cara load sebuah relasi yang tidak terkait langsung dengan suatu objek (transaction tidak punya relasi langsung dengan campaign images)
-	err := r.db.Preload("Campaign.CampaignImages", "campaign_images.is_primary = 1").Where("user_id = ?", userID).Find(&transactions).Error
+	err := r.db.Preload("Campaign.CampaignImages", "campaign_images.is_primary = 1").Order("id desc").Where("user_id = ?", userID).Find(&transactions).Error
 	if err != nil {
 		return transactions, err
 	}
