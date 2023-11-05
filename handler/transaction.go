@@ -95,3 +95,25 @@ func (h *transactionHandler) CreateTransaction(c *gin.Context) {
 // input from user
 // handler tangkap input terus di mapping ke input struct
 // panggil service buat transaksi, manggil sistem midtrans buat daftarin
+func (h *transactionHandler) GetNotification(c *gin.Context) {
+	var input transaction.TransactionNotificationInput
+
+	err := c.ShouldBindJSON(&input)
+
+	if err != nil {
+		response := helper.APIResponse("Failed to process notification", http.StatusBadRequest, "error handler 1", nil)
+		c.JSON(http.StatusBadRequest, response)
+
+		return
+	}
+
+	err = h.service.ProcessPayment(input)
+	if err != nil {
+		response := helper.APIResponse("Failed to process notification", http.StatusBadRequest, "error handler 2", nil)
+		c.JSON(http.StatusBadRequest, response)
+
+		return
+	}
+
+	c.JSON(http.StatusOK, input)
+}
